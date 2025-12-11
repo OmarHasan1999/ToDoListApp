@@ -22,70 +22,57 @@
     </div>
 </template>
 
-
-
-
-<script>
-export default {
-    data() {
-        return {
-            theTasks:[
-                {
-                    yourTask: "steal bananas from the supermarket",
-                    status:"To-do"
-                    
-                },
-                {
-                    yourTask: "Eat 1kg in 1 hour",
-                    status:"Finish",
-                    
-                },
-                {
-                    yourTask: "create youtube video",
-                    status:"To-do"
-                    
-                }
-            ],
-            task:"",
-            update : null,
-            status : "To-do",
-            
-        }
+<script setup>
+import { ref } from 'vue';
+const theTasks = ref([
+    {
+    yourTask: "steal bananas from the supermarket",
+    status:"To-do"              
     },
-   methods: {
-    addTask(){
-        if(this.task === "") return;
+    {
+    yourTask: "Eat 1kg in 1 hour",
+    status:"Finish",              
+    },
+    {
+    yourTask: "create youtube video",
+    status:"To-do"               
+    }
+])
 
-        if(this.update === null)
-        this.theTasks.push({
-            yourTask : this.task,
+const task= ref("")
+const update = ref(null)
+
+const addTask = () => {
+        if(task.value === "") return;
+
+        if(update.value === null)
+        theTasks.value.push({
+            yourTask : task.value,
             status : "To-do"
         })
-        else(this.theTasks[this.update].yourTask = this.task)
-        this.task= ""
-    },
-
-    deleteTask(index){
-       this.theTasks.splice(index, 1)
-    },
-    editTask(index){
-        this.task = this.theTasks[index].yourTask;
-        this.update = index
-    },
-    togglstatus(index){
-        if(this.theTasks[index].status === "To-do"){
-            this.theTasks[index].status = "Finish"
-        }else(
-            this.theTasks[index].status = "To-do"
-        )
+        else{theTasks.value[update.value].yourTask = task.value}
+        task.value= ""
     }
-    
-   },
-}
+
+const deleteTask = (index) => {
+    theTasks.value.splice(index, 1)
+    }
+
+const editTask = (index) => {
+    task.value = theTasks.value[index].yourTask;
+    update.value = index
+    }
+
+const togglstatus = (index) => {
+        if(theTasks.value[index].status === "To-do"){
+            theTasks.value[index].status = "Finish"
+        }else{
+            theTasks.value[index].status = "To-do"
+        }
+    }
+
+
 </script>
-
-
-
 
 <style lang="css">
     *{
@@ -152,5 +139,59 @@ export default {
     th{
     padding: 2vh;
     }
+
+@media (max-width: 760px) {
+    .main h3{
+        margin-left: 22vh;
+    }
+    .main input{
+      width: 45vh;
+      height: 5vh;
+      color: rgba(0, 0, 0, 0.395);
+      margin-left: 8vh;
+      padding-left: 0vh;
+    }
+}
+@media (max-width: 450px) {
+    .main h3{
+        margin-left: 25vh;
+        margin-top: -3vh;
+        margin-bottom: 3vh;
+    }
+    .main input{
+      width: 33vh;
+      height: 5vh;
+      color: rgba(0, 0, 0, 0.395);
+      margin-left: 13vh;
+      padding-left: 0vh;
+    }
+    table{
+        width: 70vh;
+        height: 35vh;
+        margin-left: -2.7vh;
+
+    }
+}
+@media (max-width: 370px) {
+    .main h3{
+        margin-left: 18vh;
+        margin-top: -3vh;
+        margin-bottom: 3vh;
+    }
+    .main input{
+      width: 33vh;
+      height: 5vh;
+      color: rgba(0, 0, 0, 0.395);
+      margin-left: 7vh;
+      padding-left: 0vh;
+    }
+    table{
+        width: 55vh;
+        height: 35vh;
+        margin-left: 2vh;
+
+    }
+}
+
 
 </style>
